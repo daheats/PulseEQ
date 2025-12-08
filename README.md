@@ -51,8 +51,24 @@ At a high level, the pipeline flows through these stages:
 - **AI / NLP:** Hugging Face models (e.g., DistilBERT or similar) for sentiment & topic signals
 - **Visualization:** Python-based charts and/or BI tooling
 
-## Roadmap
+## Environment & Dependency Management
+- PulseEQ uses a reproducible Python environment to ensure consistent behavior across machines and iterations of the project.
+- PulseEQ intentionally pins the `datasets` library to **version 2.19.1**.  
+Newer versions of the Hugging Face `datasets` library (3.x and above) removed support for dataset scripts, which breaks ingestion for the McAuley-Lab Amazon Reviews 2023 dataset used during development.
 
+By pinning the dependency, PulseEQ ensures:
+
+- Stable and predictable dataset ingestion  
+- Compatibility with script-based dataset loaders  
+- Reproducible behavior for anyone cloning the repo  
+
+All project dependencies—including the pinned `datasets` version—are captured in the [requirements.txt](requirements.txt) file, which is generated directly from the active virtual environment. 
+
+### Dataset Notes
+- PulseEQ uses the Toys & Games subset of the McAuley-Lab Amazon Reviews 2023 dataset for demonstration purposes. This dataset is large, realistic, and provides rich text for sentiment modeling and enrichment.
+- For production use, companies should replace this dataset with their own internal review sources or domain-specific text data.
+
+## Roadmap
 - [ ] Finalize data ingestion flow for the first review dataset
 - [ ] Implement basic cleaning & normalization
 - [ ] Add sentiment analysis for each review
@@ -60,6 +76,7 @@ At a high level, the pipeline flows through these stages:
 - [ ] Aggregate scores and export an analytics-ready dataset
 - [ ] Build initial charts (e.g., sentiment by theme, sentiment over time)
 - [ ] Polish documentation and add example notebooks
+- [ ] Switch to an updated parquet version of Amazon reviews
 
 ---
 

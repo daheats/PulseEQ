@@ -38,10 +38,15 @@ Product teams face a constant challenge when trying to extract meaningful patter
 
 5. Export Processed Data
     - Export a CSV containing:
-        - product_title
+        - product_id
+        - review_title
         - review_body
-        - sentiment_label
-        - sentiment_score
+    - Along with PulseEQ-generated enrichment outputs:
+        - sentiment_label (positive, neutral, negative)
+        - sentiment_score (confidence)
+    - Additional options may include:
+        - product category (filtered to "toy")
+        - brand_tag (e.g. Mattel-related keyword detection)
     - Enable easy sharing and further analysis.
 
 

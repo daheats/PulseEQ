@@ -9,12 +9,13 @@
     - DistilBERT also has a small memory footprint compared to full BERT, which keeps local processing light.
 ## Data Pipeline Overview
 ### Loading Data
-- Dataset sourced from [HuggingFace (Amazon Product Reviews 2023)](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023)
-    - Note: The Amazon 2023 dataset is extremely large, so PulseEQ processes only a filtered subset for the MVP demonstration.
-    - This dataset is included for example purposes only. Companies that are interested in sentiment analysis should use their own current datasets or plan to collect data that aligns with the specific insights they want to generate.
-        - A good dataset for sentiment analysis should include clear text reviews, relevant metadata such as product or category information, and enough examples to reflect a range of customer opinions. Higher quality datasets also avoid duplicated entries, contain minimal noise, and represent the audience or domain a company wants to understand.
+- Dataset sourced from [HuggingFace (Amazon Reviews 2023)](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023)
+    - Note: The Amazon 2023 dataset is extremely large, so for the MVP PulseEQ works with the **Toys & Games** subset and additional filters to keep processing manageable.
+  - Implementation detail: PulseEQ pins the `datasets` library to a 2.x version because this dataset currently relies on a script-based loader that is not supported in newer 3.x releases.
+- This dataset is included for example purposes only. Companies that are interested in sentiment analysis should use their own current datasets or plan to collect data that aligns with the specific insights they want to generate.
+- A good dataset for sentiment analysis should include clear text reviews, relevant metadata such as product or category information, and enough examples to reflect a range of customer opinions. Higher quality datasets also avoid duplicated entries, contain minimal noise, and represent the audience or domain a company wants to understand.
 ### Filtering
-- PulseEQ filters the dataset to include only products sold by Mattel. This creates a focused subset of toy reviews with enough sentiment variation to demonstrate the workflow while keeping processing lightweight.
+- PulseEQ first filters the dataset to the **Toys & Games** category, then further narrows it using simple keyword matching (for example, “Mattel,” “Barbie,” “Hot Wheels”) to approximate toys sold by Mattel. This creates a focused subset of reviews with enough sentiment variation to demonstrate the workflow while keeping processing lightweight.
     - In production scenarios, companies should apply filters aligned with their goals, such as brand, category, SKU, or product line. Filtering ensures that only relevant items are passed to the sentiment model.
 ### Sentiment Classification
 - Uses [HuggingFace transformers library](https://huggingface.co/docs/transformers/en/index)
