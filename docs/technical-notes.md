@@ -7,6 +7,7 @@
     - No fine-tuning or optimization is required for the MVP because DistilBERT provides strong baseline accuracy and fast CPU inference out of the box.
     - DistilBERT is well-suited for MVP use because it balances accuracy and speed without requiring GPU hardware or model fine-tuning.
     - DistilBERT also has a small memory footprint compared to full BERT, which keeps local processing light.
+
 ## Data Pipeline Overview
 ### Loading Data
 - Dataset sourced from [HuggingFace (Amazon Reviews 2023)](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023)
@@ -14,14 +15,25 @@
   - Implementation detail: PulseEQ pins the `datasets` library to a 2.x version because this dataset currently relies on a script-based loader that is not supported in newer 3.x releases.
 - This dataset is included for example purposes only. Companies that are interested in sentiment analysis should use their own current datasets or plan to collect data that aligns with the specific insights they want to generate.
 - A good dataset for sentiment analysis should include clear text reviews, relevant metadata such as product or category information, and enough examples to reflect a range of customer opinions. Higher quality datasets also avoid duplicated entries, contain minimal noise, and represent the audience or domain a company wants to understand.
+
 ### Filtering
 - PulseEQ first filters the dataset to the **Toys & Games** category, then further narrows it using simple keyword matching (for example, “Mattel,” “Barbie,” “Hot Wheels”) to approximate toys sold by Mattel. This creates a focused subset of reviews with enough sentiment variation to demonstrate the workflow while keeping processing lightweight.
     - In production scenarios, companies should apply filters aligned with their goals, such as brand, category, SKU, or product line. Filtering ensures that only relevant items are passed to the sentiment model.
-### Sentiment Classification
+
+### AI Enrichment
+
+#### Sentiment Classification
 - Uses [HuggingFace transformers library](https://huggingface.co/docs/transformers/en/index)
-- For each review:
-    - Extract the sentiment label (positive, negative, or neutral) and the associated confidence score from the model's output.
-    - Store the label and score alongside the product title and review body.
+    - For each review:
+        - Extract the sentiment label (positive, negative, or neutral) and the associated confidence score from the model's output.
+        - Store the label and score alongside the product title and review body.
+
+#### Topic/category tagging
+- TK
+
+#### AI-generated Product Labels
+- Because the dataset lacks product names, PulseEQ uses AI to generate a short product label from the ASIN and review text. This enables clean product grouping and visualization without relying on external catalogs. The generated `product_label` is used throughout the analytics pipeline.
+
 ### Visualization Approach
 - Uses matplotlib for MVP.
     - Matplotlib is used for the MVP because it is lightweight, widely supported, and requires no additional UI dependencies.
@@ -63,6 +75,8 @@ pulse_eq/
 ```
 - All installed libraries are captured in [`requirements.txt`](../requirements.txt)
 
+### Image Handling (Future Enhancement)
+While the MVP does not use image data, PulseEQ retains awareness of the `images` field for future enhancements. Many negative reviews include photos showing defects (e.g., damage, missing parts). A later version may analyze these images to validate negative review claims or identify recurring quality issues. This would enable a deeper understanding of root causes behind negative sentiment, but is out of scope for the MVP.
 
 
 

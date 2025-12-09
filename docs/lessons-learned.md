@@ -23,7 +23,11 @@ Consider switching to a Parquet-based Amazon Reviews dataset post-MVP to elimina
 
 This single insight directly influenced PulseEQ’s dataset loading strategy, environment setup, and technical documentation.
 
-## 2. Placeholder Lesson: Something Profound Definitely Goes Here
+## 2. Dataset Bonus Fields
+
+Some datasets include bonus fields (e.g., images) that are not needed for the MVP but may become valuable later. It’s helpful to note their potential early to avoid limiting future functionality.
+
+## 3. Placeholder Lesson: Something Profound Definitely Goes Here
 
 This section is intentionally left blank(-ish).
 

@@ -13,9 +13,9 @@ def load_customer_reviews():
         "McAuley-Lab/Amazon-Reviews-2023",
         "raw_review_Toys_and_Games",
         trust_remote_code=True
-
     )
-    return dataset
+    # The dataset ships with a single split named "full", which contains all reviews.
+    return dataset["full"]
 
 
 if __name__ == "__main__":
